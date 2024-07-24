@@ -2,7 +2,10 @@
 
 :root{
 	--background-color: #e0e0e0;
-	--text-color: #3e3e4b;
+	--color-one: #3e3e4b;
+	--color-two: #95ff63;
+	--color-three: #44ca05;
+	--color-four: #05e710;
 	--transition-time: 0.2s;
 	--border-radius: 10px;
 }
@@ -33,20 +36,36 @@
 	background: linear-gradient(45deg, #ffb0b0, #feffb0, #b7ffb0, #b0ffe7);
 	height: 100vh;
 	background-size: 200% 200%;
-	animation: colorWave 20s ease-in-out infinite;
+	animation: colorWave 17s ease-in-out infinite;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	gap: 15px;
 }
 
+.button-container{
+	display: flex;
+	gap: 30px;
+}
+
 .start-button, .reset-button{
 	font-size: 1.2rem;
 	padding: 0.5em 0.6em;
-	background-color: #95ff63;
-	border: 1px solid #44ca05;
+	background-color: var(--color-two);
+	border: 2px solid var(--color-three);
 	border-radius: var(--border-radius);
 	cursor: pointer;
+	box-shadow: 0px 3px 0px var(--color-one);
+	transition: var(--transition-time);	
+}
+
+.start-button:hover, .reset-button:hover{
+	transform: translateY(3px);
+	box-shadow: none;
+}
+
+.start-button:active, .reset-button:active{
+	background-color: var(--color-four);
 }
 
 #slider{
@@ -54,21 +73,32 @@
 	min-width: 250px;
 }
 
+#slider::-webkit-slider-runnable-track{
+	background: #95ff63;
+	border-radius: 10px;
+}
+
+#slider::-moz-range-track{
+	background: #95ff63;
+	border-radius: 10px;
+}
+
 .text{
 	font-size: 3rem;
-	color: var(--text-color);
+	color: var(--color-one);
 }
 
 .date{
 	font-size: 1.5rem;
-	color: var(--text-color);
+	color: var(--color-one);
 	font-weight: 300;
 }
 
 .tree-select{
 	font-size: 1.5rem;
-	background-color: var(--background-color);
+	background-color: var(--color-two);
 	border-radius: var(--border-radius);
+	border: 1px solid var(--color-three);
 }
 
 .tree-show{
