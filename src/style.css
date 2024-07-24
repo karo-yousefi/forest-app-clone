@@ -96,7 +96,7 @@
 	justify-content: center;
 	align-items: center;
 	font-size: 2rem;
-	background: url(./src/pic/grass.png);
+	background: url(./pic/grass.png);
 	background-size: cover;
 	transition: var(--transition-time);
 	user-select: none;
