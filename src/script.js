@@ -1,5 +1,5 @@
 const slider = document.querySelector("#slider");
-const text = document.querySelector(".text");
+const timer = document.querySelector(".timer");
 const startButton = document.querySelector(".start-button");
 const resetButton = document.querySelector(".reset-button");
 const treeSelect = document.querySelector('.tree-select');
@@ -88,7 +88,6 @@ const plots = [
 		contain: "",
 	},
 	{
-		isFull: false,
 		contain: "",
 	},
 	{
@@ -189,7 +188,6 @@ function showDate() {
 	dateText.innerHTML = format;
 }
 
-showDate();
 
 function setTime() {
 	let min = slider.value;
@@ -205,8 +203,8 @@ function setTime() {
 		min = "0" + min;
 	}
 
-	text.innerHTML = hour+":"+min+":00";
-	changeTreeShow();
+	timer.innerHTML = hour+":"+min+":00";
+	selectTree(whichTree(1));
 }
 
 
@@ -221,20 +219,20 @@ function startTimer() {
 	startButton.disabled = true;
 
 	countdown = setInterval(() => {
+		const state = whichTree(1);
 		if (sec<=0) {
 			timeToReset = 10;
 			resetTimer()
-			addTree(1);
+			addTree(state);
 			return;
 		}
 		sec--;
 		if (timeToReset > 0) {
 			timeToReset--;
 		}
-		console.log(timeToReset);
 
 		calcTimer(sec);
-	}, 1000);
+	}, 1);
 }
 
 
@@ -261,57 +259,116 @@ function calcTimer(sec) {
 
 function resetTimer() {
 	if (timeToReset <= 0) {
-		addTree(0);
+		addTree(whichTree(0));
 	}
 	clearInterval(countdown);
 	slider.disabled = false;
 	startButton.disabled = false;
 	slider.value = 0;
-	text.innerHTML = "00:00:00";
+	timer.innerHTML = "00:00:00";
 	
 }
 
 
 function displayTime(time) {
-	text.innerHTML = time;
+	timer.innerHTML = time;
 }
 
 
-function changeTreeShow() {
+function whichTree(isAlive) {
+	if (isAlive === 1){
+		if (slider.value >= 0 && slider.value < 30){
+			return 1;
+		}
+		else if(slider.value >= 30 && slider.value < 60) {
+			return 2;
+		}
+		else if(slider.value >= 60 && slider.value < 90) {
+			return 3;
+		}
+		else if (slider.value >= 90 && slider.value < 120){
+			return 4;
+		}
+	}
+	else if (isAlive === 0) {
+		return 0; // Dead;
+	}
+
+}
+
+
+function selectTree(state) {
 	const treeIndex = treeList.findIndex(obj => 
 		Object.values(obj).includes(treeSelect.value)
 	)
-
-	if (slider.value >= 0 && slider.value < 30){
+	if (state === 1){
 		treeShow.innerHTML = treeList[treeIndex].shape_1;
 	}
-	else if(slider.value >= 30 && slider.value < 60) {
+	else if(state === 2) {
 		treeShow.innerHTML = treeList[treeIndex].shape_2;
 	}
-	else if(slider.value >= 60 && slider.value < 120) {
+	else if(state === 3) {
 		treeShow.innerHTML = treeList[treeIndex].shape_3;
 	}
-	else {
+	else if (state === 4) {
+		treeShow.innerHTML = treeList[treeIndex].shape_4;
+	}
+	else if (state === 5) {
+		treeShow.innerHTML = treeList[treeIndex].shape_dead;
+	}
+}
+
+
+function changeTreeSelected() {
+		const treeIndex = treeList.findIndex(obj => 
+		Object.values(obj).includes(treeSelect.value)
+	)
+	const state = whichTree(1);
+
+	if (state === 1){
+		treeShow.innerHTML = treeList[treeIndex].shape_1;
+	}
+	else if(state === 2) {
+		treeShow.innerHTML = treeList[treeIndex].shape_2;
+	}
+	else if(state === 3) {
+		treeShow.innerHTML = treeList[treeIndex].shape_3;
+	}
+	else if (state === 4) {
 		treeShow.innerHTML = treeList[treeIndex].shape_4;
 	}
 }
 
-function addTree(status) {
+
+function addTree(state) {
 	for (let i=0; i<plots.length; i++) {
 		if (plots[i].isFull === false) {
 			plots[i].isFull = true;
-			if (status === 1) {
-				plots[i].contain = treeShow.innerHTML;
-				plotsGrid[i].innerHTML = treeShow.innerHTML;
+
+			const treeIndex = treeList.findIndex(obj =>
+				Object.values(obj).includes(treeSelect.value)
+			)
+
+			if (state === 1) {
+				plots[i].contain = treeList[treeIndex].shape_1;
+				plotsGrid[i].innerHTML = treeList[treeIndex].shape_1;
 			}
-			else if (status ===0) {
-				const treeIndex = treeList.findIndex(obj => 
-					Object.values(obj).includes(treeSelect.value)
-				)
+			else if (state === 2) {
+				plots[i].contain = treeList[treeIndex].shape_2;
+				plotsGrid[i].innerHTML = treeList[treeIndex].shape_2;
+			}
+			else if (state === 3) {
+				plots[i].contain = treeList[treeIndex].shape_3;
+				plotsGrid[i].innerHTML = treeList[treeIndex].shape_3;
+			}
+			else if (state === 4) {
+				plots[i].contain = treeList[treeIndex].shape_4;
+				plotsGrid[i].innerHTML = treeList[treeIndex].shape_4;
+			}
+			else if (state === 0) { // Dead
 				plots[i].contain = treeList[treeIndex].shape_dead;
 				plotsGrid[i].innerHTML = treeList[treeIndex].shape_dead;
 			}
-
 			return;
 		}
 	}
@@ -319,7 +376,11 @@ function addTree(status) {
 	return;
 }
 
+
+showDate();
+
+
 startButton.addEventListener("click", startTimer);
 resetButton.addEventListener("click", resetTimer);
 slider.addEventListener("input", setTime);
-treeSelect.addEventListener("input", changeTreeShow);
+treeSelect.addEventListener("input", changeTreeSelected);

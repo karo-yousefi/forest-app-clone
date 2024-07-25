@@ -3,24 +3,24 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Test Site</title>
+	<title>Timer</title>
 	<script src="https://kit.fontawesome.com/74563a76db.js" crossorigin="anonymous"></script>
-	<link rel="stylesheet" type="text/css" href="style.css">
+	<link rel="stylesheet" type="text/css" href="./src/style.css">
 </head>
 <body>
 	<div class="container">
 		<p class="date"></p>
 		<input type="range" id="slider" min="0" max="120" value="0">
-		<p class="text">00:00:00</p>
+		<p class="timer">00:00:00</p>
 		<div class="button-container">
 			<button class="start-button">Start</button>
+			<select class="tree-select" name="trees" id="tress">
+				<option value="💛">💛</option>
+				<option value="🟡">🟡</option>
+				<option value="🟨">🟨</option>
+			</select>
 			<button class="reset-button">Reset</button>
 		</div>
-		<select class="tree-select" name="trees" id="tress">
-			<option value="💛">💛</option>
-			<option value="🟡">🟡</option>
-			<option value="🟨">🟨</option>
-		</select>
 		<h1 class="tree-show">💛</h1>
 		<div class="grid-container">
 			<div class="plot 0"></div>
@@ -50,6 +50,6 @@
 			<div class="plot 24"></div>
 		</div>
 	</div>
-	<script type="text/javascript" src="script.js"></script>
+	<script type="text/javascript" src="./src/script.js"></script>
 </body>
 </html>
