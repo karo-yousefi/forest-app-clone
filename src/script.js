@@ -232,7 +232,7 @@ function startTimer() {
 		}
 
 		calcTimer(sec);
-	}, 1);
+	}, 1000);
 }
 
 
