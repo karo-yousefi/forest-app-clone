@@ -7,6 +7,7 @@ const treeShow = document.querySelector(".tree-show");
 const plotsGrid = document.querySelector(".grid-container").children;
 const dateText = document.querySelector(".date");
 const clearButton = document.querySelector(".clear-all");
+const savedText = document.querySelector(".saved-text");
 
 let countdown;
 let timeToReset = 10;
@@ -381,24 +382,27 @@ function addTree(state) {
 
 function saveFunction() {
 	localStorage.setItem("plots", JSON.stringify(plots));
-	// alert("saved!");
+	savedText.classList.add("animate");
+	savedText.addEventListener('animationend', () => {
+		savedText.classList.remove('animate');
+}, { once: true });
 }
 
 
 function loadFunction() {
 	const savedData = localStorage.getItem("plots");
 	if (savedData) {
-			plots = JSON.parse(savedData);
+		plots = JSON.parse(savedData);
 
-			for (let j=0; j<plots.length; j++) {
-				for (let i=0; i<plotsGrid.length; i++) {
-					if (plotsGrid[i].innerHTML === "") {
-						plotsGrid[i].innerHTML = plots[j].contain;
-						break;
-					}
+		for (let j=0; j<plots.length; j++) {
+			for (let i=0; i<plotsGrid.length; i++) {
+				if (plotsGrid[i].innerHTML === "") {
+					plotsGrid[i].innerHTML = plots[j].contain;
+					break;
 				}
 			}
-			}
+		}
+	}
 }
 
 

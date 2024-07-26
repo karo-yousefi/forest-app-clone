@@ -6,7 +6,7 @@
 	--color-two: #95ff63;
 	--color-three: #44ca05;
 	--color-four: #05e710;
-	--transition-time: 0.2s;
+	--transition-time: 0.16s;
 	--border-radius: 10px;
 }
 
@@ -24,12 +24,44 @@
 	}
 }
 
+@keyframes fade-in{
+	0%{
+		transform: translateY(0px);
+		opacity: 0;
+	}
+
+	20%{
+		transform: translateY(-120px);
+		opacity: 1;
+	}
+
+	50%{
+		transform: translateY(-120px);
+		opacity: 1;
+	}
+
+	80%{
+		transform: translateY(-120px);
+		opacity: 1;
+	}
+
+	100%{
+		transform: translateY(0px);
+		opacity: 0;
+
+	}
+}
+
 *{
 	box-sizing: border-box;
 	margin: 0px auto;
 	padding: 0px;
 	font-family: "Inter", sans-serif;
 	user-select: none;
+}
+
+body{
+	overflow: hidden;
 }
 
 .container{
@@ -118,8 +150,8 @@
 }
 
 .plot{
-	width: 4vw;
-	height: 4vw;
+	width: 5vw;
+	height: 5vw;
 	min-width: 40px;
 	min-height: 40px;
 	border: 2px solid #000000;
@@ -134,7 +166,20 @@
 }
 
 .plot:hover{
-	scale: 1.04;
+	scale: 1.05;
 	border: 2px solid #0077ff;
-	font-size: 2.5rem;
+	font-size: 3rem;
+}
+
+.saved-text{
+	opacity: 1;
+	font-size: calc(1rem + 1vw);
+	position: absolute;
+	bottom: -100px;
+	left: 10px;
+	font-weight: 400;
+}
+
+.animate {
+	animation: fade-in 2s ease-in-out;
 }
