@@ -6,6 +6,7 @@ const treeSelect = document.querySelector('.tree-select');
 const treeShow = document.querySelector(".tree-show");
 const plotsGrid = document.querySelector(".grid-container").children;
 const dateText = document.querySelector(".date");
+const clearButton = document.querySelector(".clear-all");
 
 let countdown;
 let timeToReset = 10;
@@ -34,7 +35,7 @@ const treeList = [
 	}
 ]
 
-const plots = [
+let plots = [
 	{
 		isFull: false,
 		contain: "",
@@ -232,7 +233,7 @@ function startTimer() {
 		}
 
 		calcTimer(sec);
-	}, 1000);
+	}, 100);
 }
 
 
@@ -369,6 +370,7 @@ function addTree(state) {
 				plots[i].contain = treeList[treeIndex].shape_dead;
 				plotsGrid[i].innerHTML = treeList[treeIndex].shape_dead;
 			}
+			saveFunction();
 			return;
 		}
 	}
@@ -377,10 +379,48 @@ function addTree(state) {
 }
 
 
+function saveFunction() {
+	localStorage.setItem("plots", JSON.stringify(plots));
+	// alert("saved!");
+}
+
+
+function loadFunction() {
+	const savedData = localStorage.getItem("plots");
+	if (savedData) {
+			plots = JSON.parse(savedData);
+
+			for (let j=0; j<plots.length; j++) {
+				for (let i=0; i<plotsGrid.length; i++) {
+					if (plotsGrid[i].innerHTML === "") {
+						plotsGrid[i].innerHTML = plots[j].contain;
+						break;
+					}
+				}
+			}
+			}
+}
+
+
+function clearAll() {
+	localStorage.removeItem("plots");
+	for (plot of plots) {
+		plot.isFull = false;
+		plot.contain = "";
+	}
+
+	for (grid of plotsGrid) {
+		grid.innerHTML = "";
+	}
+}
+
+
 showDate();
+loadFunction();
 
 
 startButton.addEventListener("click", startTimer);
 resetButton.addEventListener("click", resetTimer);
 slider.addEventListener("input", setTime);
 treeSelect.addEventListener("input", changeTreeSelected);
+clearButton.addEventListener("click", clearAll);

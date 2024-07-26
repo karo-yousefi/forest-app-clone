@@ -48,7 +48,7 @@
 	gap: 30px;
 }
 
-.start-button, .reset-button{
+.start-button, .reset-button, .clear-all{
 	font-size: 1.2rem;
 	padding: 0.5em 0.6em;
 	background-color: var(--color-two);
@@ -59,12 +59,12 @@
 	transition: var(--transition-time);	
 }
 
-.start-button:hover, .reset-button:hover{
+.start-button:hover, .reset-button:hover, .clear-all:hover{
 	transform: translateY(3px);
 	box-shadow: none;
 }
 
-.start-button:active, .reset-button:active{
+.start-button:active, .reset-button:active, .clear-all:active{
 	background-color: var(--color-four);
 }
 
