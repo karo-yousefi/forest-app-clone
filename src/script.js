@@ -234,7 +234,7 @@ function startTimer() {
 		}
 
 		calcTimer(sec);
-	}, 100);
+	}, 1000);
 }
 
 
